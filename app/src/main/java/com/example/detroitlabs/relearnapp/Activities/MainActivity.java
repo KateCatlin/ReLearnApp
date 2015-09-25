@@ -14,9 +14,7 @@ import com.example.detroitlabs.relearnapp.R;
 
 public class MainActivity extends Activity {
 
-    private Button trueButton;
-    private Button falseButton;
-    private Button nextButton;
+    private Button trueButton, falseButton, nextButton, backButton;
     private TextView questionTextView;
 
     private TrueFalse[] questionBank = new TrueFalse[] {
@@ -33,6 +31,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         questionTextView = (TextView)findViewById(R.id.question_text_view);
+        questionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentIndex = (currentIndex + 1) % questionBank.length;
+                updateQuestion();
+            }
+        });
+
 
         trueButton = (Button) findViewById(R.id.true_button);
         trueButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +64,16 @@ public class MainActivity extends Activity {
                 updateQuestion();
             }
         });
+
+        backButton = (Button)findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentIndex = Math.abs((currentIndex - 1) % questionBank.length);
+                updateQuestion();
+            }
+        });
+
         updateQuestion();
     }
 
