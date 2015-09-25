@@ -13,6 +13,7 @@ import com.example.detroitlabs.relearnapp.R;
 
 
 public class MainActivity extends Activity {
+    private static final String KEY_INDEX = "index";
 
     private Button trueButton, falseButton, nextButton, backButton;
     private TextView questionTextView;
@@ -74,6 +75,10 @@ public class MainActivity extends Activity {
             }
         });
 
+        if (savedInstanceState != null) {
+            currentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+
         updateQuestion();
     }
 
@@ -100,6 +105,12 @@ public class MainActivity extends Activity {
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(KEY_INDEX, currentIndex);
     }
 
 }
