@@ -1,10 +1,12 @@
 package com.example.detroitlabs.relearnapp.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +17,8 @@ import com.example.detroitlabs.relearnapp.R;
 public class MainActivity extends Activity {
     private static final String KEY_INDEX = "index";
 
-    private Button trueButton, falseButton, nextButton, backButton;
+    private ImageButton nextButton, backButton;
+    private Button trueButton, falseButton,  cheatButton;
     private TextView questionTextView;
 
     private TrueFalse[] questionBank = new TrueFalse[] {
@@ -57,7 +60,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        nextButton = (Button)findViewById(R.id.next_button);
+        nextButton = (ImageButton)findViewById(R.id.next_button);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,12 +69,23 @@ public class MainActivity extends Activity {
             }
         });
 
-        backButton = (Button)findViewById(R.id.back_button);
+        backButton = (ImageButton)findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentIndex = Math.abs((currentIndex - 1) % questionBank.length);
                 updateQuestion();
+            }
+        });
+
+        cheatButton = (Button)findViewById(R.id.cheat_button);
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, CheatActivity.class);
+                boolean answerIsTrue = questionBank[currentIndex].isTrueQuestion();
+                i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+                startActivity(i);
             }
         });
 
